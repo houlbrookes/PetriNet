@@ -1,0 +1,148 @@
+﻿<Window x:Class="PetriNet.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PetriNet"
+        mc:Ignorable="d" 
+        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:SystemModel x:Key="theModel" />
+        <DataTemplate DataType="{x:Type local:Node}">
+            <local:NodeControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:Transition}">
+            <local:TransControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:Arc}">
+            <local:ArcControl />
+        </DataTemplate>
+
+    </Window.Resources>
+    <DockPanel Name="TheDockPanel" DataContext="{StaticResource theModel}">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Command="{Binding TheLoadFileCommand}" CommandParameter="{Binding}"/>
+                <MenuItem Header="Save" Command="{Binding TheSaveFileCommand}" CommandParameter="{Binding}"/>
+                <MenuItem Header="-"/>
+                <MenuItem Header="Exit" Click="MenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Refresh" Command="{Binding TheRefreshCommand}" CommandParameter="{Binding}" />
+            <MenuItem Header="Edit">
+                <MenuItem Header="Add Node" Command="{Binding TheAddNodeCommand}" CommandParameter="{Binding}" />
+            </MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Left" >
+            <ContentControl Content="{Binding SelectedItem}" Width="200">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type local:Node}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Ref" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Ref}" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="X" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding X}" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Y" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Y}" />
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Token Count" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding TokenCount}" />
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Max" />
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding MaxToken}" />
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:Arc}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Ref" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Ref}" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="From Node?" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FromNode}" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Node" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Node.Ref}" />
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Qty" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Qty}" />
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Transfer Rate" />
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TransferRate}" />
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:Transition}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Ref" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Ref}" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="X" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding X}" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Y" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Y}" />
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="On" />
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding On}" />
+                            <ListBox Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Grid.RowSpan="6" ItemsSource="{Binding Arcs}"  />
+                        </Grid>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </Grid>
+        <Grid DockPanel.Dock="Right"><!--SelectionChanged="ListView_SelectionChanged"-->
+            <ListView Name="lstItems" ItemsSource="{Binding Items}" 
+                       local:MouseBehaviour.MouseUpCommand="{Binding Path=MouseUpCommand}"
+                      SelectionMode="Single"
+                      ScrollViewer.CanContentScroll="True"
+                      ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      SelectionChanged="ListView_SelectionChanged"
+                      >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Name="cnvMain" Background="LightSlateGray" Width="{Binding Path=Width}">
+                            <Canvas.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Add Node" Command="{Binding TheAddNodeCommand}" CommandParameter="{Binding}" />
+                                    <MenuItem Header="Add Transition" Command="{Binding TheAddTransitionCommand}" CommandParameter="{Binding}" />
+                                </ContextMenu>
+                            </Canvas.ContextMenu>
+                        </Canvas>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </Grid>
+    </DockPanel>
+</Window>

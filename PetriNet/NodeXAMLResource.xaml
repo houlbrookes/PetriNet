@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PetriNet">
+    <DataTemplate x:Key="NodeText" DataType="{x:Type local:Node}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Ref" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Ref}" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="X" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding X}" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Y" />
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Y}" />
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="PetriNet.TransControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PetriNet"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="10" 
+             Loaded="UserControl_Loaded" 
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
+             MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
+             MouseMove="UserControl_MouseMove"
+             GiveFeedback="UserControl_GiveFeedback"
+             AllowDrop="True"
+             Drop = "UserControl_Drop"
+             DragOver="UserControl_DragOver"
+             >
+    <UserControl.Resources>
+        <local:Transition x:Key="trans" X="0" Y="0" Ref="T1"/>
+    </UserControl.Resources>
+    <UserControl.RenderTransform>
+        <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
+    </UserControl.RenderTransform>
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Fire" Command="{Binding DoubleClick}" CommandParameter="{Binding}"/>
+            <MenuItem Header="Delete" Click="DeleteMenuItem_Click"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+
+    <Canvas Name="theCanvas" d:DataContext="{StaticResource trans}">
+        <TextBlock Canvas.Left="-60" Canvas.Top="-15"  Text="{Binding Path=Ref}" TextAlignment="Center" Width="130"/>
+        <Rectangle Name="theRectangle" Height="30" Width="10">
+            <Rectangle.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DoubleClick}" CommandParameter="{Binding}"/>
+            </Rectangle.InputBindings>
+        </Rectangle>
+    </Canvas>
+</UserControl>
